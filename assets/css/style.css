@@ -1,0 +1,26 @@
+body {
+    text-align: center;    
+}
+
+h1, navbar, h2, h3 {
+    font-family: 'Ranchers', cursive;    
+}
+
+p, h4, h5, h6, a {
+    font-family: 'Raleway', sans-serif;
+}
+
+#characterABox,
+#characterBBox,
+#characterCBox,
+#characterDBox {
+    color: white;
+}
+
+#opponentSelectionBox {
+    color: white;
+}
+
+#CharacterABox {
+    background-color: #a99986
+}
