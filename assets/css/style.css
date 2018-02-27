@@ -1,5 +1,6 @@
 body {
-    text-align: center;    
+    text-align: center;
+    background-image: "../images/bg-full.jpg";
     background: #09adef;
     color: white;
 }
@@ -23,7 +24,7 @@ p, h4, h5, h6, a {
     line-height: 1.2em;
   } */
   
-.character {
+.characterlook {
 position: relative;
 background: #09adef;
 color: white;
@@ -35,7 +36,7 @@ margin: 0 5px;
 padding: 5px;
 } */
 
-.character img {
+.characterlook img {
 display: block;
 width: 200;
 height: 250px;
