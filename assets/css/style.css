@@ -10,10 +10,7 @@ p, h4, h5, h6, a {
     font-family: 'Raleway', sans-serif;
 }
 
-#characterABox,
-#characterBBox,
-#characterCBox,
-#characterDBox {
+#characterBox {
     color: white;
 }
 
@@ -21,6 +18,25 @@ p, h4, h5, h6, a {
     color: white;
 }
 
-#CharacterABox {
-    background-color: #a99986
+.character-inner > span {
+    display: block;
+    width: 100%;
+    line-height: 1.2em;
+  }
+  
+.character {
+position: relative;
+}
+
+.character-inner {
+margin: 0 5px;
+padding: 5px;
+}
+
+.character img {
+display: block;
+width: 75px;
+height: 75px;
+position: relative;
+z-index: 1;
 }

@@ -10,7 +10,6 @@
         crossorigin="anonymous">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Raleway|Ranchers" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <title>RPG</title>
 </head>
 
@@ -26,103 +25,60 @@
     <br>
     <!-- Create body container for bg image -->
 
-    <div class="container fluid" id="bodyContainer">
-        <div class="row">
+    <div class="container fluid" id="gameContainer">
+        <h6 id="gameDescriptor">
+            Click on your character to get started. The character health is shown at the bottom of each card. Once you've made your selection,
+            pick an opponent to fight. You can only fight one opponent at a time.
+            <br>
+            <br> The goal of the game is to defeat every other opponent, without running out of health. If you run out of health
+            at any time, you lose.
+            <br>
+            <br>Click "Attack" to play the game.
+        </h6>
+        <br>
+        <!-- Create Tile Section -->
+        <h4 class="text-center" id="makeSelectionText">
+            <!-- To begin, select your fighter. -->
+        </h4>
+        <br>
 
-            <!-- Create main game container -->
-            <div class="container" id="gameContainer">
-                <h6 class="text-left" id="gameDescriptor">
-                    Click on your character to get started. The character health is shown at the bottom of each card. Once you've made your selection,
-                    pick an opponent to fight. You can only fight one opponent at a time.
-                    <br>
-                    <br> The goal of the game is to defeat every other opponent, without running out of health. If you run out
-                    of health at any time, you lose.
-                    <br>
-                    <br>Click "Attack" to play the game.
-                </h6>
-                <br>
-                <!-- Create Tile Section -->
-                <h4 class="text-center" id="makeSelectionText">
-                    To begin, select your fighter.
-                </h4>
-                <br>
+        <!-- Create Character Selection Area -->
+        <div class="characterSelectionArea">
+            <a class="row justify-content-between text-center"></a>
+        </div>
 
-                <!-- Create Character Selection Area -->
-                <div class="row justify-content-between" id="characterSelectionArea">
+        <br>
 
-                    <!-- Create Character A -->
-                    <a class="col-2 bg-primary" id="characterABox">
-                        <span id="CharacterAName">Old Man Jenkins</span>
-                        <img class="img-fluid" id="CharacterAImage" src="assets/images/oldman.png">
-                        <span id="CharacterAScore"></span>
-                    </a>
+        
+        <div class="row fighterArena justify-content-between align-items-center">
+            <div class="col-4 userSelection"></div>
+            <div class="col-4 opponentSelection"></div>
+        </div>
+        
+        <br>
+        
+        <div class="row justify-content-between align-items-center messageArea">
 
-                    <!-- Create Character B -->
-                    <a class="col-2 bg-primary" id="characterBBox">
-                        <span id="CharacterBName">Mrs. Ramirez</span>
-                        <img class="img-fluid" id="CharacterBImage" src="assets/images/mrsramirez.png">
-                        <span id="CharacterBScore"></span>
-                    </a>
+            <div class="col-4 bg-danger text-white" id="opponentAlertMessage"></div>
 
-                    <!-- Create Character C -->
-                    <a class="col-2 bg-primary" id="characterCBox">
-                        <span id="CharacterCName">Hipster Bro</span>
-                        <img class="img-fluid" id="CharacterCImage" src="assets/images/hipsterbro.png">
-                        <span id="CharacterCScore"></span>
-                    </a>
-
-                    <!-- Create Character D -->
-                    <a class="col-2 bg-primary" id="characterDBox">
-                        <span id="CharacterDName">High Schooler</span>
-                        <img class="img-fluid" id="CharacterDImage" src="assets/images/highschool.png">
-                        <span id="CharacterDScore"></span>
-                    </a>
-
-                </div>
-
-                <br>
-
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-3 bg-primary" id="yourSelectionBox">
-                        <!-- <span id="CharacterDName">Replace this with your</span> -->
-                        <!-- <img class="img-fluid" id="CharacterDImage" src="http://via.placeholder.com/250x200"> -->
-                        <span id="characterScore"></span>
-                    </div>
-
-                    <div class="col-2 bg-danger text-white" id="opponentAlertMessage">
-                    </div>
-
-                    <div class="row align-items-center">
-                        <div class="col-12">
-                            <button type="button" class="btn btn-dark" id="attackButton">Attack!</button>
-                        </div>
-                        <br>
-                        <br>
-                    </div>
-
-                    <div class="col-2 bg-success text-white" id="yourAlertMessage">
-                    </div>
-
-                    <div class="col-3 bg-primary" id="opponentSelectionBox">
-                        <!-- <span id="opponentName">Replace this with your</span> -->
-                        <!-- <img class="img-fluid" id="opponentImage" src="http://via.placeholder.com/250x200"> -->
-                        <span id="opponentScore"></span>
-                    </div>
-                </div>
-                <br>
+            <div class="col-4">
+                <button type="button" class="btn btn-success" id="attackButton">Attack!</button>
+                <button type="button" class="btn btn-danger" id="resetButton">Reset Game...</button>
             </div>
 
-            <!-- <div class="row">
-                <div class="col-12" id="scoreContainer">
-                    <h6 class="text-center">Score Container</h6>
-                    <h6 class="text-center" id="yourWins">Wins: </h6>
-                    <h6 class="text-center" id="yourLosses">Losses: </h6>
-                </div>
-            </div> -->
-
+            <div class="col-4 bg-success text-white" id="yourAlertMessage"></div>
         </div>
+
+        <!-- <div class="col-3 bg-primary" id="opponentSelectionBox"> -->
+        <!-- <span id="opponentName">Replace this with your</span> -->
+        <!-- <img class="img-fluid" id="opponentImage" src="http://via.placeholder.com/250x200"> -->
+        <!-- <span id="opponentScore"></span> -->
+        <!-- </div> -->
     </div>
 
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="assets/javascript/rpg.js"></script>
 </body>
 
@@ -130,20 +86,20 @@
 
 <!-- Assigning multiple event listeners to the same object (taught from Ron -->
 <!-- <script>
-function addbuttons() {
-    for (var i = 0; i < 10; i++) {
-        var newButton = $('<button class="btn-primary">' + i + "</button>");
-
-        $(".container").append(newButton);
-    }
-}
-
-$(".container").on("click", "btn-primary", function() {
-    console.log($(this).text());
-});
-
-$("#load").on("click", function() {
-    addButtons();    
-});
+        function addbuttons() {
+            for (var i = 0; i < 10; i++) {
+                var newButton = $('<button class="btn-primary">' + i + "</button>");
+                
+                $(".container").append(newButton);
+            }
+        }
+        
+        $(".container").on("click", "btn-primary", function() {
+            console.log($(this).text());
+        });
+        
+        $("#load").on("click", function() {
+            addButtons();    
+        });
 
 </script> -->
