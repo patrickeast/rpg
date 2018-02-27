@@ -19,7 +19,7 @@
 
     <nav class="navbar navbar-dark bg-dark">
         <span class="navbar-brand mb-0 h1"></span>
-        <span class="display-4 text-white">RPG Title</span>
+        <div class="text-white" id="title">Meet the Johnsons</div>
         <span class="navbar-brand mb-0 h1"></span>
     </nav>
     <br>
@@ -29,13 +29,7 @@
         <h6 id="gameDescriptor">
             Click on your character to get started. The character health is shown at the bottom of each card. Once you've made your selection,
             pick an opponent to fight. You can only fight one opponent at a time.
-            <br>
-            <br> The goal of the game is to defeat every other opponent, without running out of health. If you run out of health
-            at any time, you lose.
-            <br>
-            <br>Click "Attack" to play the game.
         </h6>
-        <br>
         <!-- Create Tile Section -->
         <h4 class="text-center" id="makeSelectionText">
             <!-- To begin, select your fighter. -->
@@ -43,8 +37,8 @@
         <br>
 
         <!-- Create Character Selection Area -->
-        <div class="characterSelectionArea">
-            <a class="row justify-content-between text-center"></a>
+        <div class="text-center characterSelectionArea">
+            <div class="row justify-content-between text-center character"></div>
         </div>
 
         <br>
@@ -78,28 +72,10 @@
 
 
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
     <script src="assets/javascript/rpg.js"></script>
+
 </body>
 
 </html>
-
-<!-- Assigning multiple event listeners to the same object (taught from Ron -->
-<!-- <script>
-        function addbuttons() {
-            for (var i = 0; i < 10; i++) {
-                var newButton = $('<button class="btn-primary">' + i + "</button>");
-                
-                $(".container").append(newButton);
-            }
-        }
-        
-        $(".container").on("click", "btn-primary", function() {
-            console.log($(this).text());
-        });
-        
-        $("#load").on("click", function() {
-            addButtons();    
-        });
-
-</script> -->

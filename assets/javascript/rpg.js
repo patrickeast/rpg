@@ -1,22 +1,22 @@
 window.onload = function () {
-    $(".characterSelectionArea > a").click(playground.userSelection);
-    $(".characterSelectionArea").on("click", "a.character", playground.userSelection);
+    $(".characterSelectionArea div").text(playground.userSelection);
+    $(".characterSelectionArea").text(playground.userSelection);
     var selectionText = $("#makeSelectionText").text("To begin, select your fighter.");
     $("#attackButton").click(playground.fightScenario);
-    $("body").on("click", ".resetButton", playground.resetGame);
+    $("#resetButton").click(playground.resetGame);
     // $(".messageArea").hide();
     // $("#makeSelectionText").hide();
     // $(".characterSelectionArea").hide();
     // $("#gameContainer").hide();
     // setInterval(function () {
     //     $("#gameContainer").show()
-    // }, 0);
+    // }, 1000);
     // setInterval(function () {
     //     $("#makeSelectionText").show()
-    // }, 0);
+    // }, 1500);
     // setInterval(function () {
     //     $(".characterSelectionArea").show()
-    // }, 0);
+    // }, 2000);
 };
 
 
@@ -32,8 +32,8 @@ var characterA = {
     damage: Math.floor(Math.random() * 5),
     counterAttack: 5,
     imagePath: "assets/images/oldman.png",
-    cssId: "characterA",
-    dataAttr: "characterA"
+    cssClass: "character-oldman",
+    dataAttr: "character"
 };
 
 var characterB = {
@@ -42,7 +42,7 @@ var characterB = {
     damage: Math.floor(Math.random() * 15),
     counterAttack: 20,
     imagePath: "assets/images/mrsramirez.png",
-    cssId: "characterB",
+    cssClass: "character-ramirez",
     dataAttr: "characterB"
 };
 
@@ -52,7 +52,7 @@ var characterC = {
     damage: Math.floor(Math.random() * 15),
     counterAttack: 25,
     imagePath: "assets/images/hipsterbro.png",
-    cssId: "characterC",
+    cssClass: "character-hipster",
     dataAttr: "characterC"
 };
 
@@ -62,25 +62,15 @@ var characterD = {
     damage: Math.floor(Math.random() * 10),
     counterAttack: 5,
     imagePath: "assets/images/highschool.png",
-    cssId: "characterD",
+    cssClass: "character-teenager",
     dataAttr: "characterD"
 };
 
 var allCharacters = [characterA, characterB, characterC, characterD];
 
-// $("attackButton").click(function(){
-//     $(this).data("clicked", true);
-//   });
-
-// if($("#attackButton").data('clicked')) {
-//     //clicked element, do-some-stuff
-// } else {
-//     //run function2
-// }
-
 var playground = {
-    userSelection: "characterA",
-    opponentSelection: "characterA",
+    userSelection: undefined,
+    opponentSelection: undefined,
     userHealth: 0,
     userDamage: 0,
     opponentHealth: 0,
@@ -92,8 +82,8 @@ var playground = {
 
     // -- Reset Scenario
     resetGame: function () {
-        playground.userSelection = "characterA";
-        playground.opponentSelection = "characterA";
+        playground.userSelection = undefined;
+        playground.opponentSelection = undefined;
         playground.firstPick = true;
         playground.gamePlaying = false;
         playground.userDamage = 0;
@@ -104,7 +94,6 @@ var playground = {
 
         $('.messageArea').show();
         $(".winnerOverlay").hide();
-        // $(".").hide();
         $("#makeSelectionText").text("Choose your champion.");
         $(".userSelection").empty();
         $(".opponentSelection").empty();
@@ -114,7 +103,18 @@ var playground = {
     //Make character Box Area
     characterSelectionBoxes: function (theCharacter) {
         return (
-            $("<div class='col-3'" + theCharacter.cssId + "'data-character='" + theCharacter.dataAttr + '"> <div class="character-inner"><span id="characterScore">"' + theCharacter.counterAttack + "'</div> <img src='" + theCharacter.imagePath + "'> <span>" + theCharacter.name + "</span> </div></div>"));
+            $("<div class='col-3'" + 
+            theCharacter.cssClass + 
+            "'data-character='" + 
+            theCharacter.dataAttr + 
+            "</div>" + 
+            "<div class='character-inner'><span id='characterScore'" + 
+            "</div>" + 
+            theCharacter.health + "<img src='" + 
+            theCharacter.imagePath + 
+            "'><span>" + 
+            theCharacter.name + 
+            "</span>"));
 
     },
 
@@ -124,11 +124,6 @@ var playground = {
             $(".characterSelectionArea > div").append(playground.characterSelectionBoxes(allCharacters[i]));
         }
     },
-
-    // function getCertainCharacter(objName) {
-    //     var certainCharacter = objName.substr(objName.length - 1);
-    //     return certainCharacter;
-    // };
 
     characterSelection: function () {
 
@@ -167,33 +162,80 @@ var playground = {
         }
     },
 
-    getCertainCharacter: function(objName) {
+    getCertainCharacter: function (objName) {
         var certainCharacter = objName.substr(objName.length - 1);
         return certainCharacter;
-      },
+    },
 
 
     fightScenario: function () {
 
         //on click event of attack button
-        $("#attackButton").on("click", function () {
+       if (playground.gamePlaying) {
+           playground.userDamage = playground.userDamage + playground.userSelection.damage;
+           playground.opponentHealth = playground.opponentHealth - playground.userDamage;
+           $(".userSelection .damage").text(playground.opponentHealth);
 
-            //Create randomization for damage selectors
-            characterDamage = Math.floor(Math.random() * 25);
-            opponentDamage = Math.floor(Math.random() * 25);
+           playground.userHealth = playground.user - playground.opponentSelection.counterAttack;
+           $(".opponentSelection .damage").text(playground.userHealth);
 
-            //Update alert message with damage amount for both character and opponent
-            $("#yourAlertMessage").text("You attacked your opponent for " + characterDamage + " damage!");
-            $("#opponentAlertMessage").text("Your opponent attacked you for " + opponentDamage + " damage!");
-            // characterA.health = characterA.health - opponentDamage;
-            // characterC.health = characterC.health - characterDamage;
-            $("#CharacterAScore").text("Health: " + characterA.health);
-            $("#CharacterCScore").text("Health: " + characterC.health);
-            console.log("Your opponent attacked you for " + opponentDamage + " damage!");
-            console.log("Your health is " + characterA.health);
-            console.log("You attacked your opponent for " + characterDamage + " damage");
-            console.log("Your opponent's health is " + characterC.health);
-        })
+        
+       }
+    },
+    // -- Fight
+  fight: function() {
+    if (playground.gamePlaying) {
+
+      // Attack
+      playground.userDamage = playground.userDamage + playground.userSelection.damage;
+      console.log(playground.userDamage);
+      playground.opponentHealth = playground.opponentHealth - playground.userDamage;
+      $(".opponentSelection .damage").text(playground.opponentHealth);
+
+      // Counter Attack
+      playground.userHealth = playground.userHealth - playground.opponentSelection.counterAttack;
+      $(".userSelection .damage").text(playground.userHealth);
+
+      // Display Stats
+      playground.alertDanger(
+        "You attacked " + playground.opponentSelection.name + 
+        " for " + playground.userDamage + " damage.\n" + 
+        playground.opponentSelection.name + " attacked you back for " + 
+        playground.opponentSelection.counterAttack + " damage."
+      );
+
+      // Test for Dead
+      if (playground.userHealth < 0) {
+        // user has lost
+				playground.alertDanger(playground.userSelection.name + " is DEAD. Hmm, you it was. " + playground.userSelection.pronoun + " family will be sad. Try again you must.");
+				playground.resetGame();
+      } else if (playground.opponentHealth < 0) {
+        // opponent has lost
+				playground.alertDanger(playground.opponentSelection.name + " is DEAD. " + playground.opponentSelection.pronoun +" family will be sad.");
+				$(".opponentSelection").empty();
+				playground.fightActive = false;
+        playground.opponentHealth = 0;
+        // Test for win
+        if (playground.opponentsLeft === 0){
+          playground.winScreen();
+        }
+      }
+    } else {
+      playground.alertDanger("Choose an opponent to fight first you must!");
     }
+  },
+  
+  // -- For the win
+  winScreen: function() {
+    $('.win-screen').removeClass("hide");
+    $('.messageArea').addClass('visually-hidden');
+  },
+
+	alertDanger: function(message) {
+    $(".message").text(message).removeClass("visually-hidden");
+  },
+
 };
+
+
 playground.makeArena();
