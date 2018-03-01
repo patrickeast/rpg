@@ -67,6 +67,9 @@ z-index: 1;
     color: white;
 }
 
-.messageArea {
-    margin: 0 auto;
+
+
+.userSelection {
+    width: 250px;
+    height: 500px;
 }
