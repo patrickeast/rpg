@@ -1,7 +1,12 @@
 window.onload = function () {
 
     var selectionText = $("#makeSelectionText").text("To begin, select your fighter.");
-
+    $(document).on("click", ".characterFighter", playground.characterSelection);
+    $(".characterFighter").on("click", function () {
+        $(".messageArea").show();
+    });
+    $("#attackButton").click(playground.fightScenario);
+    $("body").on("click", "#resetButton", playground.resetGame);
     $(".messageArea").hide();
     $("#makeSelectionText").hide();
     $(".characterSelectionArea").hide();
@@ -15,7 +20,6 @@ window.onload = function () {
     setInterval(function () {
         $(".characterSelectionArea").show()
     }, 3000);
-    return;
 };
 
 
@@ -28,10 +32,10 @@ window.onload = function () {
 var characterA = {
     name: "Old Man Jenkins",
     health: 80,
-    damage: Math.floor(Math.random() * 5),
+    damage: 5,
     counterAttack: 5,
-    imagePath: "assets/images/OldMan.gif",
-    cssClass: "character-oldman",
+    imagePath: "assets/images/oldman.png",
+    // cssClass: "character-oldman",
     dataAttr: "character0",
     selected: false,
 };
@@ -41,8 +45,8 @@ var characterB = {
     health: 100,
     damage: Math.floor(Math.random() * 15),
     counterAttack: 20,
-    imagePath: "assets/images/mrsramirez.gif",
-    cssClass: "character-ramirez",
+    imagePath: "assets/images/mrsramirez.png",
+    // cssClass: "character-ramirez",
     dataAttr: "character1",
     selected: false,
 
@@ -53,8 +57,8 @@ var characterC = {
     health: 70,
     damage: Math.floor(Math.random() * 15),
     counterAttack: 25,
-    imagePath: "assets/images/hipsterbro.gif",
-    cssClass: "character-hipster",
+    imagePath: "assets/images/hipsterbro.png",
+    // cssClass: "character-hipster",
     dataAttr: "character2",
     selected: false,
 
@@ -65,8 +69,8 @@ var characterD = {
     health: 110,
     damage: Math.floor(Math.random() * 10),
     counterAttack: 5,
-    imagePath: "assets/images/highschooler.gif",
-    cssClass: "character-teenager",
+    imagePath: "assets/images/highschool.png",
+    // cssClass: "character-teenager",
     dataAttr: "character3",
     selected: false,
 
@@ -110,59 +114,37 @@ var playground = {
         $(".characterSelectionArea").empty();
         playground.makeArena();
     },
-
-    //Make character Box Area
-    characterSelectionBoxes: function (theCharacter) {
-        console.log("characterSelectionBoxes is running.");
-        console.log(theCharacter);
-
-        // var charDiv = $("<div>");
-        // var charImg = $("<img>");
-        // charImg.attr("src", theCharacter.imagePath);
-        // charDiv.addClass("col-3 characterFighter character-inner");
-        // charDiv.attr("data-name", theCharacter);
-        
-
-        // return charDiv;
-
-
-        return (
-            $('<div data-select="' + theCharacter.selected  +  '" class="col-3 characterFighter"'  + theCharacter.cssClass + "data-character=" + theCharacter.dataAttr + "</div>" + '<div class="character-inner"><span id="characterScore"' + "</div>" + "Health: " + theCharacter.health + "<img src='" + theCharacter.imagePath + "'><span>" + theCharacter.name + "</span>"));
-    },
-
     //Show characters in arena
     makeArena: function () {
-        $(document).on("click", ".characterFighter", playground.characterSelection);
-        if ($(".characterlook").on("click", function () {
-            console.log("You clicked.");
-            $(".messageArea").show();
-        }));
-        $("#attackButton").click(playground.fightScenario);
-        $("body").on("click", "#resetButton", playground.resetGame);
         console.log("makeArena Function is running.");
-
         for (var i = 0; i < allCharacters.length; i++) {
-            $(".characterSelectionArea > div").append(playground.characterSelectionBoxes(allCharacters[i]));
-            console.log("The loop is running");
-            // console.log(allCharacters[i]);
+            $(".characterSelectionArea > div").append(playground.makeCharacters(allCharacters[i]));
+            console.log(allCharacters[i]);
         }
     },
 
+    //Make character Box Area//
+    makeCharacters: function (theCharacter) {
+        console.log("makeCharacters is running.");
+        return (
+            $('<div data-select="' + theCharacter.selected + '" class="col-3 characterFighter"' + "data-character=" + theCharacter.dataAttr + " " + "</div>" + '<div class="character-inner"><span id="characterScore"' + "</div>" + "Health: " + theCharacter.health + "<img src='" + theCharacter.imagePath + "'><span>" + theCharacter.name + "</span>"));
+        console.log(theCharacter);
+    },
+
+
     characterSelection: function () {
         console.log("CharacterSelection Function is running.");
-        console.log(this);
-        console.log($(this).attr("data-select"));
-
-        //if allCharacters[i].selected = true {}
+        $(this).attr("data-select");
+        // if (allCharacters[i].selected = true) {
+        //     console.log($(this).attr("data-select"));
+            
+        
         if (playground.chosenFirst) {
-            // console.log("playground.chosenFirst is true");
             // Select Champion
-            playground.userSelection = $(this).data("data-select");
-            // console.log(playground.userSelection);
-            // playground.userSelection = allCharacters[playground.getCharacterIndex(playground.userSelection)];
-            // console.log(playground.userSelection);
+            playground.userSelection = $(this).attr("data-select");
+
             $(this)
-                .removeClass("col-3")
+                .addClass("yourFighter")
                 .remove()
                 .appendTo(".userSelection");
             $("#makeSelectionText").text("Now choose your opponent");
@@ -170,11 +152,12 @@ var playground = {
             playground.userHealth = playground.userSelection.counterAttack;
             playground.firstPick = false;
             playground.opponentsLeft = allCharacters.length - 1;
-        } else if (!playground.gamePlaying) {
+
+        } 
+        else if (!playground.gamePlaying) {
 
             //Now select your opponent
-            playground.opponentSelection = $(this).data("data-select");
-            // playground.opponentSelection = allCharacters[playground.getCharacterIndex(playground.opponentSelection)];
+            playground.opponentSelection = $(this).attr("data-select");
             $(this)
                 .removeClass("col-3")
                 .remove()
@@ -182,19 +165,16 @@ var playground = {
             playground.opponentDamage = playground.opponentSelection.health;
             playground.gamePlaying = true;
             playground.opponentsLeft = playground.opponentsLeft - 1;
+            $("makeSelectionText").text("Fight!");
         } else {
 
             //First text area alert
             $("#makeSelectionText").text("Start by selecting a champion.");
         }
+        return;
     },
 
-    // getCharacterIndex: function (objName) {
-    //     var objName = $(".data-select");
-    //     console.log("getCharacterIndex function is running.");
-    //     var characterIndex = objName.substr(objName.length - 1);
-    //     return characterIndex;
-    // },
+
 
 
     fightScenario: function () {
