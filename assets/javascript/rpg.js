@@ -34,7 +34,7 @@ var characterA = {
     health: 80,
     damage: 5,
     counterAttack: 5,
-    imagePath: "assets/images/oldman.png",
+    imagePath: "assets/images/oldmanwalking.gif",
     // cssClass: "character-oldman",
     dataAttr: "character0",
     selected: false,
